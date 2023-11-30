@@ -1,3 +1,15 @@
-# adventofcode
+<div align="center">
+<h1>Advent of Code - @geekmasher</h1>
 
-@GeekMasher's Advent of Code Repository
+```
+      __        ______    ______   
+     /""\      /    " \  /" _  "\  
+    /    \    // ____  \(: ( \___) 
+   /' /\  \  /  /    ) :)\/ \      
+  //  __'  \(: (____/ // //  \ _   
+ /   /  \\  \\        / (:   _) \  
+(___/    \___)\"_____/   \_______) 
+                                   
+```
+
+</div>
