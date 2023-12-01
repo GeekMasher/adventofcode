@@ -4,6 +4,7 @@ use crate::Arguments;
 use anyhow::Result;
 
 pub mod day0;
+pub mod day1;
 
 pub type DayFn = dyn Fn(&Arguments) -> Result<()>;
 
