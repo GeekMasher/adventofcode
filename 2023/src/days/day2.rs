@@ -5,13 +5,17 @@ use anyhow::Result;
 struct Game {
     id: i32,
     possible: bool,
+
+    red: i32,
+    blue: i32,
+    green: i32,
 }
 
 impl From<&str> for Game {
     fn from(value: &str) -> Self {
         let mut game = Game {
-            id: 0,
             possible: true,
+            ..Default::default()
         };
 
         let (game_str, cubes) = value.split_once(": ").unwrap();
@@ -24,9 +28,24 @@ impl From<&str> for Game {
                 let count: i32 = count_str.parse().unwrap();
 
                 let result = match colour {
-                    "red" => count > 12,
-                    "green" => count > 13,
-                    "blue" => count > 14,
+                    "red" => {
+                        if game.red < count {
+                            game.red = count
+                        }
+                        count > 12
+                    }
+                    "green" => {
+                        if game.green < count {
+                            game.green = count
+                        }
+                        count > 13
+                    }
+                    "blue" => {
+                        if game.blue < count {
+                            game.blue = count
+                        }
+                        count > 14
+                    }
                     _ => todo!("More colours?"),
                 };
                 if result {
@@ -46,9 +65,15 @@ pub fn run(arguments: &Arguments) -> Result<()> {
     for line in input.lines() {
         let game = Game::from(line);
 
-        if game.possible {
-            total += game.id;
-        }
+        let power = game.red * game.blue * game.green;
+
+        println!("{:?} ({power})", game);
+
+        // PART 2
+        // if game.possible {
+        //     total += game.id;
+        // }
+        total += power;
     }
 
     println!("Total :: {total}");
