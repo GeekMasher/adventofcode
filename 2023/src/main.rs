@@ -12,6 +12,7 @@ fn main() -> Result<()> {
     let mut days = Days::new();
     days.register(1, day1::run);
     days.register(2, day2::run);
+    days.register(3, day3::run);
 
     if arguments.day == 0 {
         days.show_days();
