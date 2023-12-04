@@ -6,6 +6,7 @@ struct Card {
     pub id: i32,
     pub winning: Vec<i32>,
     pub numbers: Vec<i32>,
+    pub score: i32,
 }
 
 impl From<&str> for Card {
@@ -40,11 +41,23 @@ impl From<&str> for Card {
             })
             .collect();
 
+        let score = numbers.iter().filter(|&w| winning.contains(w)).count();
+
         Card {
             id: card_id,
             winning,
             numbers,
+            score: score as i32,
         }
+    }
+}
+
+fn card_counter(counter: &mut i32, cards: &Vec<Card>, current: &Card) {
+    *counter += 1;
+    for i in 0..current.score {
+        let offset = current.id + i;
+        let card = cards.get(offset as usize).unwrap();
+        card_counter(counter, cards, card)
     }
 }
 
@@ -52,27 +65,17 @@ pub fn run(arguments: &Arguments) -> Result<()> {
     let input = super::load_input(arguments)?;
     let mut total = 0;
 
+    let mut cards: Vec<Card> = Vec::new();
+
     for line in input.lines() {
         let card = Card::from(line);
 
-        let win_number = card
-            .numbers
-            .iter()
-            .filter(|&w| card.winning.contains(w))
-            .count();
+        cards.push(card);
+    }
 
-        println!("{:?} ({})", card, win_number);
-
-        let mut score = 0;
-        for i in 0..win_number {
-            if i == 0 {
-                score = 1;
-            } else {
-                score = score * 2;
-            }
-        }
-        println!("{score}");
-        total += score;
+    for card in &cards {
+        println!("{:?}", card);
+        card_counter(&mut total, &cards, card);
     }
 
     println!("Total :: {total}");
