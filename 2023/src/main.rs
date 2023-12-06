@@ -15,6 +15,7 @@ fn main() -> Result<()> {
     days.register(3, day3::run);
     days.register(4, day4::run);
     days.register(5, day5::run);
+    days.register(6, day6::run);
 
     if arguments.day == 0 {
         days.show_days();
